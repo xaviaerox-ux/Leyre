@@ -1,0 +1,2274 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<meta name="theme-color" content="#0d0d1a">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="Leyre 🌸">
+<title>Leyre 🌸</title>
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800;900&family=Pacifico&display=swap" rel="stylesheet">
+
+<style>
+/* ============================================================
+   CSS VARIABLES & RESET
+============================================================ */
+:root {
+  --bg: #0d0d1a;
+  --bg2: #131326;
+  --bg3: #1a1a33;
+  --surface: #1e1e3a;
+  --surface2: #252545;
+  --border: rgba(255,255,255,0.07);
+  --pink: #ff6eb4;
+  --pink2: #ff9dd0;
+  --purple: #b47eff;
+  --blue: #6eb5ff;
+  --teal: #5fffcc;
+  --yellow: #ffe96e;
+  --orange: #ffb36e;
+  --red: #ff6e6e;
+  --text: #f0f0ff;
+  --text2: #a0a0c0;
+  --text3: #606080;
+  --glow-pink: 0 0 20px rgba(255,110,180,0.4);
+  --glow-purple: 0 0 20px rgba(180,126,255,0.4);
+  --glow-teal: 0 0 20px rgba(95,255,204,0.4);
+  --radius: 20px;
+  --radius-sm: 12px;
+  --font: 'Nunito', sans-serif;
+  --font-display: 'Pacifico', cursive;
+}
+
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+html, body {
+  height: 100%;
+  overflow: hidden;
+  font-family: var(--font);
+  background: var(--bg);
+  color: var(--text);
+  -webkit-tap-highlight-color: transparent;
+  overscroll-behavior: none;
+}
+
+body {
+  display: flex;
+  flex-direction: column;
+  max-width: 430px;
+  margin: 0 auto;
+  position: relative;
+}
+
+/* ============================================================
+   SCROLLABLE MAIN
+============================================================ */
+#app {
+  display: flex;
+  flex-direction: column;
+  height: 100dvh;
+  overflow: hidden;
+}
+
+#scroll-area {
+  flex: 1;
+  overflow-y: auto;
+  overflow-x: hidden;
+  padding: 0 0 120px 0;
+  scrollbar-width: none;
+}
+#scroll-area::-webkit-scrollbar { display: none; }
+
+/* ============================================================
+   ONBOARDING SCREEN
+============================================================ */
+#onboarding {
+  position: fixed; inset: 0;
+  background: var(--bg);
+  z-index: 1000;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-start;
+  padding: 40px 24px 40px;
+  overflow-y: auto;
+  gap: 0;
+}
+
+.ob-title {
+  font-family: var(--font-display);
+  font-size: 2.2rem;
+  color: var(--pink);
+  text-shadow: var(--glow-pink);
+  margin-bottom: 4px;
+  text-align: center;
+}
+.ob-sub {
+  color: var(--text2);
+  font-size: 0.95rem;
+  text-align: center;
+  margin-bottom: 32px;
+}
+
+.ob-emoji {
+  font-size: 5rem;
+  margin-bottom: 16px;
+  animation: float 3s ease-in-out infinite;
+}
+
+.ob-section {
+  width: 100%;
+  margin-bottom: 20px;
+}
+
+.ob-label {
+  font-size: 0.8rem;
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  color: var(--pink2);
+  margin-bottom: 8px;
+  display: block;
+}
+
+.ob-input {
+  width: 100%;
+  background: var(--surface);
+  border: 2px solid var(--border);
+  border-radius: var(--radius-sm);
+  color: var(--text);
+  font-family: var(--font);
+  font-size: 1rem;
+  padding: 14px 16px;
+  outline: none;
+  transition: border-color 0.2s;
+  -webkit-appearance: none;
+}
+.ob-input:focus { border-color: var(--pink); }
+
+.ob-toggle-group {
+  display: flex;
+  gap: 8px;
+}
+.ob-toggle {
+  flex: 1;
+  background: var(--surface);
+  border: 2px solid var(--border);
+  border-radius: var(--radius-sm);
+  color: var(--text2);
+  font-family: var(--font);
+  font-size: 0.9rem;
+  font-weight: 700;
+  padding: 12px 8px;
+  cursor: pointer;
+  transition: all 0.2s;
+  text-align: center;
+}
+.ob-toggle.active {
+  background: var(--pink);
+  border-color: var(--pink);
+  color: white;
+  box-shadow: var(--glow-pink);
+}
+
+.ob-row {
+  display: flex;
+  gap: 10px;
+}
+.ob-row .ob-section { flex: 1; margin-bottom: 0; }
+
+.ob-btn {
+  width: 100%;
+  padding: 18px;
+  background: linear-gradient(135deg, var(--pink), var(--purple));
+  border: none;
+  border-radius: var(--radius);
+  color: white;
+  font-family: var(--font);
+  font-size: 1.1rem;
+  font-weight: 900;
+  cursor: pointer;
+  margin-top: 24px;
+  box-shadow: var(--glow-pink);
+  transition: transform 0.15s, box-shadow 0.15s;
+  letter-spacing: 0.02em;
+}
+.ob-btn:active { transform: scale(0.97); }
+
+/* ============================================================
+   HEADER / TAMAGOTCHI
+============================================================ */
+#header {
+  padding: 16px 16px 0;
+  position: relative;
+  z-index: 10;
+}
+
+.baby-card {
+  background: var(--surface);
+  border-radius: var(--radius);
+  padding: 16px;
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  border: 1.5px solid var(--border);
+  position: relative;
+  overflow: hidden;
+}
+
+.baby-card::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(135deg, rgba(255,110,180,0.06), rgba(180,126,255,0.06));
+  pointer-events: none;
+}
+
+.tama-avatar {
+  font-size: 3.5rem;
+  line-height: 1;
+  flex-shrink: 0;
+  transition: transform 0.3s cubic-bezier(0.34,1.56,0.64,1);
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 68px;
+  height: 68px;
+  background: var(--surface2);
+  border-radius: 50%;
+  border: 2px solid var(--border);
+}
+.tama-avatar.bounce { animation: bounce-once 0.5s cubic-bezier(0.34,1.56,0.64,1); }
+
+.baby-info { flex: 1; min-width: 0; }
+.baby-name {
+  font-family: var(--font-display);
+  font-size: 1.4rem;
+  color: var(--pink);
+  line-height: 1;
+}
+.baby-age {
+  font-size: 0.75rem;
+  color: var(--text2);
+  margin: 2px 0 6px;
+}
+.tama-status {
+  font-size: 0.85rem;
+  font-weight: 700;
+  color: var(--text);
+  line-height: 1.3;
+}
+.tama-substatus {
+  font-size: 0.72rem;
+  color: var(--text2);
+  margin-top: 2px;
+}
+
+.streak-badge {
+  background: linear-gradient(135deg, var(--yellow), var(--orange));
+  border-radius: 20px;
+  padding: 4px 10px;
+  font-size: 0.7rem;
+  font-weight: 800;
+  color: #1a0a00;
+  display: flex;
+  align-items: center;
+  gap: 3px;
+  flex-shrink: 0;
+  box-shadow: 0 0 12px rgba(255,233,110,0.3);
+}
+
+/* ============================================================
+   VITALS BAR
+============================================================ */
+.vitals-row {
+  display: flex;
+  gap: 8px;
+  padding: 12px 16px 0;
+}
+
+.vital-chip {
+  flex: 1;
+  background: var(--surface);
+  border-radius: var(--radius-sm);
+  padding: 10px 8px;
+  text-align: center;
+  border: 1.5px solid var(--border);
+  position: relative;
+  overflow: hidden;
+}
+
+.vital-chip::after {
+  content: '';
+  position: absolute;
+  bottom: 0; left: 0; right: 0;
+  height: 3px;
+  border-radius: 0 0 10px 10px;
+  background: var(--accent, var(--pink));
+  transform: scaleX(var(--fill, 0));
+  transform-origin: left;
+  transition: transform 0.6s cubic-bezier(0.34,1.56,0.64,1);
+}
+
+.vital-icon { font-size: 1.1rem; line-height: 1; }
+.vital-label { font-size: 0.6rem; font-weight: 800; text-transform: uppercase; letter-spacing: 0.08em; color: var(--text3); margin: 2px 0; }
+.vital-value { font-size: 0.85rem; font-weight: 900; color: var(--text); }
+
+/* ============================================================
+   KPI STRIP
+============================================================ */
+.kpi-strip {
+  display: flex;
+  gap: 8px;
+  padding: 8px 16px 0;
+  overflow-x: auto;
+  scrollbar-width: none;
+}
+.kpi-strip::-webkit-scrollbar { display: none; }
+
+.kpi-pill {
+  flex-shrink: 0;
+  background: var(--surface);
+  border: 1.5px solid var(--border);
+  border-radius: 30px;
+  padding: 6px 12px;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  white-space: nowrap;
+}
+.kpi-pill-icon { font-size: 0.85rem; }
+.kpi-pill-text { font-size: 0.75rem; color: var(--text2); }
+.kpi-pill-val { font-size: 0.78rem; font-weight: 800; color: var(--text); }
+
+/* ============================================================
+   SECTION TITLES
+============================================================ */
+.section-label {
+  font-size: 0.68rem;
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+  color: var(--text3);
+  padding: 14px 16px 6px;
+}
+
+/* ============================================================
+   ACTION BUTTONS GRID
+============================================================ */
+.btn-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 10px;
+  padding: 0 16px;
+}
+.btn-grid.single { grid-template-columns: 1fr; }
+.btn-grid.triple { grid-template-columns: 1fr 1fr 1fr; }
+
+.action-btn {
+  position: relative;
+  background: var(--surface);
+  border: 2px solid var(--border);
+  border-radius: var(--radius);
+  padding: 18px 12px;
+  cursor: pointer;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 6px;
+  transition: transform 0.15s, box-shadow 0.2s, border-color 0.2s;
+  overflow: hidden;
+  -webkit-user-select: none;
+  user-select: none;
+  touch-action: manipulation;
+  min-height: 110px;
+  justify-content: center;
+}
+
+.action-btn::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: var(--btn-glow, transparent);
+  opacity: 0;
+  transition: opacity 0.3s;
+  pointer-events: none;
+}
+
+.action-btn:active { transform: scale(0.95); }
+.action-btn.pressed::before { opacity: 1; animation: press-flash 0.3s ease; }
+
+.action-btn.active-teta {
+  border-color: var(--pink);
+  box-shadow: var(--glow-pink);
+  animation: pulse-border 2s ease-in-out infinite;
+}
+
+.btn-icon { font-size: 2.4rem; line-height: 1; transition: transform 0.2s; }
+.btn-label { font-size: 0.85rem; font-weight: 900; text-transform: uppercase; letter-spacing: 0.08em; color: var(--text); }
+.btn-sublabel { font-size: 0.7rem; color: var(--text2); font-weight: 600; text-align: center; }
+.btn-badge {
+  position: absolute;
+  top: 8px; right: 8px;
+  background: var(--pink);
+  color: white;
+  font-size: 0.65rem;
+  font-weight: 900;
+  border-radius: 20px;
+  padding: 2px 7px;
+  min-width: 20px;
+  text-align: center;
+}
+
+/* Color themes per button */
+.btn-bibe { --btn-glow: radial-gradient(circle at center, rgba(110,181,255,0.15), transparent 70%); }
+.btn-bibe:active, .btn-bibe.pressed { border-color: var(--blue); box-shadow: 0 0 20px rgba(110,181,255,0.3); }
+
+.btn-teta { --btn-glow: radial-gradient(circle at center, rgba(255,110,180,0.15), transparent 70%); }
+.btn-teta:active, .btn-teta.pressed { border-color: var(--pink); box-shadow: var(--glow-pink); }
+
+.btn-pipi { --btn-glow: radial-gradient(circle at center, rgba(255,233,110,0.15), transparent 70%); }
+.btn-pipi:active, .btn-pipi.pressed { border-color: var(--yellow); box-shadow: 0 0 20px rgba(255,233,110,0.3); }
+
+.btn-caca { --btn-glow: radial-gradient(circle at center, rgba(255,179,110,0.15), transparent 70%); }
+.btn-caca:active, .btn-caca.pressed { border-color: var(--orange); box-shadow: 0 0 20px rgba(255,179,110,0.3); }
+
+.btn-peso { --btn-glow: radial-gradient(circle at center, rgba(95,255,204,0.15), transparent 70%); }
+.btn-peso:active, .btn-peso.pressed { border-color: var(--teal); box-shadow: var(--glow-teal); }
+
+/* ============================================================
+   TETA SESSION ACTIVE CARD
+============================================================ */
+.teta-active-card {
+  margin: 8px 16px 0;
+  background: linear-gradient(135deg, rgba(255,110,180,0.15), rgba(180,126,255,0.1));
+  border: 1.5px solid var(--pink);
+  border-radius: var(--radius);
+  padding: 14px 16px;
+  display: none;
+  animation: slideDown 0.3s ease;
+}
+.teta-active-card.visible { display: flex; align-items: center; gap: 12px; }
+
+.teta-timer-ring {
+  width: 56px; height: 56px;
+  flex-shrink: 0;
+  position: relative;
+}
+.teta-timer-ring svg { width: 100%; height: 100%; transform: rotate(-90deg); }
+.teta-ring-bg { fill: none; stroke: rgba(255,255,255,0.1); stroke-width: 4; }
+.teta-ring-fill { fill: none; stroke: var(--pink); stroke-width: 4; stroke-linecap: round;
+  stroke-dasharray: 157; stroke-dashoffset: 157; transition: stroke-dashoffset 1s linear; }
+.teta-timer-text {
+  position: absolute; inset: 0;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 0.7rem; font-weight: 900; color: var(--pink);
+}
+
+.teta-info { flex: 1; }
+.teta-info-title { font-size: 0.85rem; font-weight: 900; color: var(--pink); }
+.teta-info-sub { font-size: 0.72rem; color: var(--text2); margin-top: 2px; }
+
+.teta-stop-btn {
+  background: var(--pink);
+  border: none;
+  border-radius: 30px;
+  color: white;
+  font-family: var(--font);
+  font-size: 0.8rem;
+  font-weight: 900;
+  padding: 8px 16px;
+  cursor: pointer;
+  transition: transform 0.15s;
+}
+.teta-stop-btn:active { transform: scale(0.95); }
+
+/* ============================================================
+   TIMELINE FEED
+============================================================ */
+.timeline {
+  padding: 0 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.timeline-item {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  background: var(--surface);
+  border-radius: var(--radius-sm);
+  padding: 10px 12px;
+  border: 1.5px solid var(--border);
+  animation: fadeInUp 0.3s ease;
+  position: relative;
+  overflow: hidden;
+}
+
+.timeline-item::before {
+  content: '';
+  position: absolute;
+  left: 0; top: 0; bottom: 0;
+  width: 3px;
+  background: var(--item-color, var(--pink));
+}
+
+.tl-icon { font-size: 1.3rem; flex-shrink: 0; }
+.tl-content { flex: 1; min-width: 0; }
+.tl-type { font-size: 0.8rem; font-weight: 800; color: var(--text); }
+.tl-detail { font-size: 0.7rem; color: var(--text2); margin-top: 1px; }
+.tl-time { font-size: 0.68rem; color: var(--text3); flex-shrink: 0; }
+
+/* ============================================================
+   CHARTS / STATS
+============================================================ */
+.stats-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 10px;
+  padding: 0 16px;
+}
+
+.stat-card {
+  background: var(--surface);
+  border: 1.5px solid var(--border);
+  border-radius: var(--radius);
+  padding: 14px;
+  position: relative;
+  overflow: hidden;
+}
+
+.stat-card-label {
+  font-size: 0.65rem;
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  color: var(--text3);
+  margin-bottom: 4px;
+}
+.stat-card-val {
+  font-size: 1.5rem;
+  font-weight: 900;
+  color: var(--text);
+  line-height: 1;
+}
+.stat-card-unit {
+  font-size: 0.7rem;
+  color: var(--text2);
+  font-weight: 600;
+}
+.stat-card-icon {
+  position: absolute;
+  right: 10px; top: 10px;
+  font-size: 1.4rem;
+  opacity: 0.5;
+}
+
+.mini-bar-chart {
+  display: flex;
+  align-items: flex-end;
+  gap: 3px;
+  height: 30px;
+  margin-top: 8px;
+}
+.mini-bar {
+  flex: 1;
+  background: var(--bar-color, var(--pink));
+  border-radius: 3px 3px 0 0;
+  min-height: 3px;
+  opacity: 0.6;
+  transition: height 0.5s cubic-bezier(0.34,1.56,0.64,1);
+}
+.mini-bar.today { opacity: 1; }
+
+/* ============================================================
+   WEIGHT PERCENTILE CARD
+============================================================ */
+.percentile-card {
+  margin: 0 16px;
+  background: var(--surface);
+  border: 1.5px solid var(--border);
+  border-radius: var(--radius);
+  padding: 16px;
+}
+
+.percentile-title {
+  font-size: 0.68rem;
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  color: var(--text3);
+  margin-bottom: 12px;
+}
+
+.percentile-gauge {
+  position: relative;
+  height: 12px;
+  background: var(--bg3);
+  border-radius: 6px;
+  overflow: visible;
+  margin: 8px 0 20px;
+}
+
+.pg-zone {
+  position: absolute;
+  top: 0; bottom: 0;
+  border-radius: 4px;
+}
+.pg-zone.z3 { left: 0; width: 3%; background: rgba(255,110,110,0.5); }
+.pg-zone.z15 { left: 3%; width: 12%; background: rgba(255,179,110,0.4); }
+.pg-zone.z50 { left: 15%; width: 35%; background: rgba(95,255,204,0.3); }
+.pg-zone.z85 { left: 50%; width: 35%; background: rgba(95,255,204,0.3); }
+.pg-zone.z97 { left: 85%; width: 12%; background: rgba(255,179,110,0.4); }
+.pg-zone.z100 { left: 97%; width: 3%; background: rgba(255,110,110,0.5); }
+
+.pg-marker {
+  position: absolute;
+  top: 50%; transform: translateY(-50%);
+  width: 16px; height: 16px;
+  background: white;
+  border-radius: 50%;
+  box-shadow: 0 0 8px rgba(255,255,255,0.6);
+  transition: left 0.8s cubic-bezier(0.34,1.56,0.64,1);
+  z-index: 2;
+  margin-left: -8px;
+}
+
+.pg-labels {
+  display: flex;
+  justify-content: space-between;
+  font-size: 0.62rem;
+  color: var(--text3);
+}
+
+.pg-result {
+  display: flex;
+  align-items: baseline;
+  gap: 6px;
+  margin-top: 4px;
+}
+.pg-result-num {
+  font-size: 2rem;
+  font-weight: 900;
+  color: var(--teal);
+  line-height: 1;
+}
+.pg-result-label { font-size: 0.8rem; color: var(--text2); }
+
+/* ============================================================
+   BOTTOM ACTION BAR (FIXED)
+============================================================ */
+#bottom-bar {
+  position: fixed;
+  bottom: 0; left: 50%; transform: translateX(-50%);
+  width: 100%;
+  max-width: 430px;
+  background: var(--bg2);
+  border-top: 1.5px solid var(--border);
+  padding: 10px 16px 20px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  z-index: 100;
+  backdrop-filter: blur(20px);
+}
+
+.last-action {
+  flex: 1;
+  min-width: 0;
+}
+.last-action-label {
+  font-size: 0.62rem;
+  color: var(--text3);
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+}
+.last-action-text {
+  font-size: 0.82rem;
+  color: var(--text2);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  font-weight: 600;
+}
+
+.undo-btn {
+  background: var(--surface2);
+  border: 1.5px solid var(--border);
+  border-radius: 30px;
+  color: var(--text2);
+  font-family: var(--font);
+  font-size: 0.8rem;
+  font-weight: 800;
+  padding: 8px 14px;
+  cursor: pointer;
+  transition: all 0.2s;
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  flex-shrink: 0;
+}
+.undo-btn:active { transform: scale(0.95); }
+.undo-btn.active {
+  background: var(--purple);
+  border-color: var(--purple);
+  color: white;
+  box-shadow: var(--glow-purple);
+}
+
+.export-btn {
+  background: var(--surface2);
+  border: 1.5px solid var(--border);
+  border-radius: 30px;
+  color: var(--text2);
+  font-family: var(--font);
+  font-size: 0.8rem;
+  font-weight: 800;
+  padding: 8px 10px;
+  cursor: pointer;
+  transition: all 0.2s;
+  flex-shrink: 0;
+}
+.export-btn:active { transform: scale(0.95); }
+
+/* ============================================================
+   MODAL
+============================================================ */
+.modal-overlay {
+  position: fixed; inset: 0;
+  background: rgba(0,0,0,0.7);
+  backdrop-filter: blur(8px);
+  z-index: 500;
+  display: flex;
+  align-items: flex-end;
+  justify-content: center;
+  opacity: 0; pointer-events: none;
+  transition: opacity 0.2s;
+}
+.modal-overlay.visible { opacity: 1; pointer-events: all; }
+
+.modal-sheet {
+  background: var(--surface);
+  border-radius: 28px 28px 0 0;
+  padding: 24px 24px 40px;
+  width: 100%;
+  max-width: 430px;
+  transform: translateY(100%);
+  transition: transform 0.3s cubic-bezier(0.34,1.56,0.64,1);
+}
+.modal-overlay.visible .modal-sheet { transform: translateY(0); }
+
+.modal-handle {
+  width: 36px; height: 4px;
+  background: var(--border);
+  border-radius: 2px;
+  margin: 0 auto 20px;
+}
+
+.modal-title {
+  font-size: 1.2rem;
+  font-weight: 900;
+  color: var(--text);
+  margin-bottom: 16px;
+  text-align: center;
+}
+
+.modal-input {
+  width: 100%;
+  background: var(--bg3);
+  border: 2px solid var(--border);
+  border-radius: var(--radius-sm);
+  color: var(--text);
+  font-family: var(--font);
+  font-size: 1.5rem;
+  font-weight: 900;
+  padding: 16px;
+  text-align: center;
+  outline: none;
+  transition: border-color 0.2s;
+  -webkit-appearance: none;
+  margin-bottom: 12px;
+}
+.modal-input:focus { border-color: var(--pink); }
+
+.modal-presets {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+  margin-bottom: 16px;
+  justify-content: center;
+}
+.modal-preset {
+  background: var(--bg3);
+  border: 1.5px solid var(--border);
+  border-radius: 20px;
+  color: var(--text2);
+  font-family: var(--font);
+  font-size: 0.85rem;
+  font-weight: 800;
+  padding: 8px 14px;
+  cursor: pointer;
+  transition: all 0.15s;
+}
+.modal-preset:active, .modal-preset.selected {
+  background: var(--pink);
+  border-color: var(--pink);
+  color: white;
+}
+
+.modal-confirm {
+  width: 100%;
+  background: linear-gradient(135deg, var(--pink), var(--purple));
+  border: none;
+  border-radius: var(--radius-sm);
+  color: white;
+  font-family: var(--font);
+  font-size: 1rem;
+  font-weight: 900;
+  padding: 16px;
+  cursor: pointer;
+  transition: transform 0.15s;
+}
+.modal-confirm:active { transform: scale(0.97); }
+
+/* ============================================================
+   TOAST NOTIFICATIONS
+============================================================ */
+#toast-container {
+  position: fixed;
+  top: 16px; left: 50%; transform: translateX(-50%);
+  z-index: 900;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  pointer-events: none;
+  width: calc(100% - 32px);
+  max-width: 398px;
+}
+
+.toast {
+  background: var(--surface2);
+  border: 1.5px solid var(--border);
+  border-radius: 30px;
+  padding: 10px 18px;
+  font-size: 0.85rem;
+  font-weight: 700;
+  color: var(--text);
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  animation: toastIn 0.3s cubic-bezier(0.34,1.56,0.64,1);
+  box-shadow: 0 4px 20px rgba(0,0,0,0.3);
+}
+.toast.out { animation: toastOut 0.2s ease forwards; }
+.toast-icon { font-size: 1.1rem; }
+
+/* ============================================================
+   CONFETTI PARTICLES
+============================================================ */
+.confetti-particle {
+  position: fixed;
+  width: 8px; height: 8px;
+  border-radius: 2px;
+  pointer-events: none;
+  z-index: 9999;
+  animation: confettiFall var(--dur, 1s) ease forwards;
+}
+
+/* ============================================================
+   ANIMATIONS
+============================================================ */
+@keyframes float {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-8px); }
+}
+
+@keyframes bounce-once {
+  0% { transform: scale(1); }
+  40% { transform: scale(1.3) rotate(-5deg); }
+  70% { transform: scale(0.9) rotate(3deg); }
+  100% { transform: scale(1) rotate(0); }
+}
+
+@keyframes pulse-border {
+  0%, 100% { box-shadow: 0 0 10px rgba(255,110,180,0.3); }
+  50% { box-shadow: 0 0 25px rgba(255,110,180,0.6); }
+}
+
+@keyframes press-flash {
+  0% { opacity: 0; }
+  50% { opacity: 1; }
+  100% { opacity: 0; }
+}
+
+@keyframes fadeInUp {
+  from { opacity: 0; transform: translateY(10px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes slideDown {
+  from { opacity: 0; transform: translateY(-10px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes toastIn {
+  from { opacity: 0; transform: scale(0.8) translateY(-10px); }
+  to { opacity: 1; transform: scale(1) translateY(0); }
+}
+@keyframes toastOut {
+  from { opacity: 1; transform: scale(1); }
+  to { opacity: 0; transform: scale(0.8); }
+}
+
+@keyframes confettiFall {
+  0% { transform: translateY(0) rotate(0deg); opacity: 1; }
+  100% { transform: translateY(var(--dy, 300px)) translateX(var(--dx, 50px)) rotate(var(--rot, 360deg)); opacity: 0; }
+}
+
+@keyframes spin {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
+}
+
+/* ============================================================
+   MISC HELPERS
+============================================================ */
+.hidden { display: none !important; }
+.spacer { height: 16px; }
+
+.day-counter-bar {
+  margin: 0 16px;
+  background: var(--surface);
+  border-radius: var(--radius);
+  padding: 14px 16px;
+  border: 1.5px solid var(--border);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.day-counter-item {
+  text-align: center;
+  flex: 1;
+  position: relative;
+}
+.day-counter-item:not(:last-child)::after {
+  content: '';
+  position: absolute;
+  right: 0; top: 10%; bottom: 10%;
+  width: 1px;
+  background: var(--border);
+}
+
+.day-counter-num {
+  font-size: 1.6rem;
+  font-weight: 900;
+  line-height: 1;
+}
+.day-counter-label {
+  font-size: 0.62rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: var(--text3);
+  margin-top: 2px;
+}
+
+.dot-separator {
+  margin: 16px auto;
+  display: flex;
+  gap: 5px;
+  justify-content: center;
+}
+.dot-separator span {
+  width: 4px; height: 4px;
+  border-radius: 50%;
+  background: var(--border);
+}
+
+/* safe area bottom */
+@supports (padding-bottom: env(safe-area-inset-bottom)) {
+  #bottom-bar { padding-bottom: calc(12px + env(safe-area-inset-bottom)); }
+  #scroll-area { padding-bottom: calc(120px + env(safe-area-inset-bottom)); }
+}
+</style>
+</head>
+<body>
+
+<!-- ============================================================
+     ONBOARDING
+============================================================ -->
+<div id="onboarding">
+  <div class="ob-emoji">🌸</div>
+  <div class="ob-title">¡Hola, mamá!</div>
+  <div class="ob-sub">Cuéntame un poco sobre Leyre para empezar</div>
+
+  <div class="ob-section">
+    <label class="ob-label">Nombre del bebé</label>
+    <input class="ob-input" id="ob-name" type="text" value="Leyre" placeholder="Nombre">
+  </div>
+
+  <div class="ob-section">
+    <label class="ob-label">Fecha de nacimiento</label>
+    <input class="ob-input" id="ob-dob" type="date">
+  </div>
+
+  <div class="ob-row">
+    <div class="ob-section">
+      <label class="ob-label">Peso al nacer</label>
+      <input class="ob-input" id="ob-bw" type="number" placeholder="3.2" step="0.01" min="0.5" max="6">
+    </div>
+    <div class="ob-section">
+      <label class="ob-label">Talla al nacer (cm)</label>
+      <input class="ob-input" id="ob-bh" type="number" placeholder="50" step="0.5" min="30" max="60">
+    </div>
+  </div>
+
+  <div class="ob-section">
+    <label class="ob-label">Tipo de alimentación</label>
+    <div class="ob-toggle-group">
+      <button class="ob-toggle active" data-feed="mixed" onclick="selectFeed(this)">🍼+🤱 Mixta</button>
+      <button class="ob-toggle" data-feed="breast" onclick="selectFeed(this)">🤱 Teta</button>
+      <button class="ob-toggle" data-feed="bottle" onclick="selectFeed(this)">🍼 Biberón</button>
+    </div>
+  </div>
+
+  <div class="ob-section" id="ob-premature-section">
+    <label class="ob-label">¿Prematuro/a?</label>
+    <div class="ob-toggle-group">
+      <button class="ob-toggle active" data-prem="no" onclick="selectPrem(this)">No (≥37 sem)</button>
+      <button class="ob-toggle" data-prem="yes" onclick="selectPrem(this)">Sí, prematuro/a</button>
+    </div>
+  </div>
+
+  <div class="ob-section hidden" id="ob-weeks-section">
+    <label class="ob-label">Semanas al nacer</label>
+    <input class="ob-input" id="ob-weeks" type="number" placeholder="34" min="24" max="36">
+  </div>
+
+  <div class="ob-section">
+    <label class="ob-label">Sexo</label>
+    <div class="ob-toggle-group">
+      <button class="ob-toggle active" data-sex="girl" onclick="selectSex(this)">👧 Niña</button>
+      <button class="ob-toggle" data-sex="boy" onclick="selectSex(this)">👦 Niño</button>
+    </div>
+  </div>
+
+  <button class="ob-btn" onclick="finishOnboarding()">¡Empezar a cuidar a Leyre! 🌸</button>
+</div>
+
+<!-- ============================================================
+     MAIN APP
+============================================================ -->
+<div id="app">
+  <div id="scroll-area">
+
+    <!-- HEADER -->
+    <div id="header">
+      <div class="baby-card">
+        <div class="tama-avatar" id="tama-avatar" onclick="bounceTama()">😊</div>
+        <div class="baby-info">
+          <div class="baby-name" id="baby-name-display">Leyre</div>
+          <div class="baby-age" id="baby-age-display"></div>
+          <div class="tama-status" id="tama-status">Cargando...</div>
+          <div class="tama-substatus" id="tama-substatus"></div>
+        </div>
+        <div class="streak-badge" id="streak-badge">🔥 <span id="streak-num">0</span></div>
+      </div>
+    </div>
+
+    <!-- VITALS -->
+    <div class="vitals-row">
+      <div class="vital-chip" style="--accent:var(--pink); --fill:0.5;" id="vital-hunger">
+        <div class="vital-icon">🍼</div>
+        <div class="vital-label">Hambre</div>
+        <div class="vital-value" id="vital-hunger-val">–</div>
+      </div>
+      <div class="vital-chip" style="--accent:var(--blue); --fill:0.5;" id="vital-hydration">
+        <div class="vital-icon">💧</div>
+        <div class="vital-label">Pañales</div>
+        <div class="vital-value" id="vital-hydration-val">–</div>
+      </div>
+      <div class="vital-chip" style="--accent:var(--yellow); --fill:0.5;" id="vital-comfort">
+        <div class="vital-icon">💩</div>
+        <div class="vital-label">Caca hoy</div>
+        <div class="vital-value" id="vital-comfort-val">–</div>
+      </div>
+    </div>
+
+    <!-- KPI STRIP -->
+    <div class="kpi-strip" id="kpi-strip">
+      <div class="kpi-pill">
+        <span class="kpi-pill-icon">🕐</span>
+        <span class="kpi-pill-text">Última toma</span>
+        <span class="kpi-pill-val" id="kpi-last-feed">–</span>
+      </div>
+      <div class="kpi-pill">
+        <span class="kpi-pill-icon">⏭️</span>
+        <span class="kpi-pill-text">Próxima ~</span>
+        <span class="kpi-pill-val" id="kpi-next-feed">–</span>
+      </div>
+      <div class="kpi-pill">
+        <span class="kpi-pill-icon">📊</span>
+        <span class="kpi-pill-text">Intervalo medio</span>
+        <span class="kpi-pill-val" id="kpi-avg-interval">–</span>
+      </div>
+    </div>
+
+    <!-- TODAY COUNTERS -->
+    <div class="spacer"></div>
+    <div class="day-counter-bar">
+      <div class="day-counter-item">
+        <div class="day-counter-num" id="cnt-feeds" style="color:var(--pink)">0</div>
+        <div class="day-counter-label">Tomas</div>
+      </div>
+      <div class="day-counter-item">
+        <div class="day-counter-num" id="cnt-pipi" style="color:var(--blue)">0</div>
+        <div class="day-counter-label">Pipís</div>
+      </div>
+      <div class="day-counter-item">
+        <div class="day-counter-num" id="cnt-caca" style="color:var(--orange)">0</div>
+        <div class="day-counter-label">Cacas</div>
+      </div>
+      <div class="day-counter-item">
+        <div class="day-counter-num" id="cnt-ml" style="color:var(--blue)">0</div>
+        <div class="day-counter-label">ml hoy</div>
+      </div>
+    </div>
+
+    <!-- TETA ACTIVE CARD -->
+    <div class="teta-active-card" id="teta-active-card">
+      <div class="teta-timer-ring">
+        <svg viewBox="0 0 56 56">
+          <circle class="teta-ring-bg" cx="28" cy="28" r="25"/>
+          <circle class="teta-ring-fill" id="teta-ring-fill" cx="28" cy="28" r="25"/>
+        </svg>
+        <div class="teta-timer-text" id="teta-timer-display">0:00</div>
+      </div>
+      <div class="teta-info">
+        <div class="teta-info-title" id="teta-breast-label">🤱 Pecho Izquierdo</div>
+        <div class="teta-info-sub" id="teta-info-sub">Sesión activa</div>
+      </div>
+      <button class="teta-stop-btn" onclick="stopTeta()">⏹ Parar</button>
+    </div>
+
+    <!-- ACTION BUTTONS -->
+    <div class="section-label">Registrar</div>
+    <div class="btn-grid">
+      <button class="action-btn btn-bibe" id="btn-bibe"
+        onclick="handleBibe()"
+        oncontextmenu="return false;"
+        data-longpress="openBibeModal">
+        <div class="btn-icon">🍼</div>
+        <div class="btn-label">Biberón</div>
+        <div class="btn-sublabel" id="bibe-sublabel">120 ml · mantén para editar</div>
+        <div class="btn-badge hidden" id="bibe-badge">–</div>
+      </button>
+
+      <button class="action-btn btn-teta" id="btn-teta"
+        onclick="handleTeta()">
+        <div class="btn-icon">🤱</div>
+        <div class="btn-label">Teta</div>
+        <div class="btn-sublabel" id="teta-sublabel">Pulsa para iniciar</div>
+      </button>
+
+      <button class="action-btn btn-pipi" onclick="handlePipi()">
+        <div class="btn-icon">💧</div>
+        <div class="btn-label">Pipí</div>
+        <div class="btn-sublabel">Tap rápido</div>
+      </button>
+
+      <button class="action-btn btn-caca" onclick="handleCaca()">
+        <div class="btn-icon">💩</div>
+        <div class="btn-label">Caca</div>
+        <div class="btn-sublabel">Tap rápido</div>
+      </button>
+    </div>
+
+    <div class="btn-grid single" style="margin-top:10px">
+      <button class="action-btn btn-peso" onclick="openPesoModal()" style="min-height:80px; flex-direction:row; gap:12px; padding:16px 20px; justify-content:flex-start;">
+        <div class="btn-icon">⚖️</div>
+        <div>
+          <div class="btn-label">Peso</div>
+          <div class="btn-sublabel" id="peso-sublabel">Último: –</div>
+        </div>
+      </button>
+    </div>
+
+    <!-- PERCENTILE CARD -->
+    <div class="section-label">Percentil de peso (OMS)</div>
+    <div class="percentile-card" id="percentile-card">
+      <div class="percentile-title">Peso vs. población de referencia OMS</div>
+      <div style="display:flex; align-items:baseline; gap:8px; margin-bottom:12px;">
+        <span style="font-size:0.9rem; color:var(--text2)">Último peso:</span>
+        <span style="font-size:1.2rem; font-weight:900; color:var(--text)" id="pc-last-weight">–</span>
+        <span style="font-size:0.8rem; color:var(--text2)">kg</span>
+        <span style="font-size:0.75rem; color:var(--text3); margin-left:4px;" id="pc-corrected-age"></span>
+      </div>
+      <div class="percentile-gauge" id="pg-gauge">
+        <div class="pg-zone z3"></div>
+        <div class="pg-zone z15"></div>
+        <div class="pg-zone z50"></div>
+        <div class="pg-zone z85"></div>
+        <div class="pg-zone z97"></div>
+        <div class="pg-zone z100"></div>
+        <div class="pg-marker" id="pg-marker" style="left:50%"></div>
+      </div>
+      <div class="pg-labels">
+        <span>P3</span><span>P15</span><span>P50</span><span>P85</span><span>P97</span>
+      </div>
+      <div class="pg-result" style="margin-top:12px;">
+        <span class="pg-result-num" id="pg-percentile">–</span>
+        <span class="pg-result-label" id="pg-label">Sin datos de peso aún</span>
+      </div>
+      <div style="font-size:0.68rem; color:var(--text3); margin-top:8px;">
+        Tablas OMS para niños. Edad corregida si prematuro. No sustituye revisión pediátrica.
+      </div>
+    </div>
+
+    <!-- DAILY STATS -->
+    <div class="section-label">Hoy en números</div>
+    <div class="stats-grid">
+      <div class="stat-card">
+        <div class="stat-card-icon">🍼</div>
+        <div class="stat-card-label">ml totales hoy</div>
+        <div class="stat-card-val"><span id="stat-ml-today">0</span><span class="stat-card-unit"> ml</span></div>
+        <div class="mini-bar-chart" id="ml-bars"></div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-card-icon">⏱</div>
+        <div class="stat-card-label">Teta hoy</div>
+        <div class="stat-card-val"><span id="stat-teta-today">0</span><span class="stat-card-unit"> min</span></div>
+        <div class="mini-bar-chart" id="teta-bars"></div>
+      </div>
+    </div>
+
+    <!-- TIMELINE -->
+    <div class="section-label">Últimas 24h</div>
+    <div class="timeline" id="timeline"></div>
+
+    <div class="dot-separator"><span></span><span></span><span></span></div>
+    <div style="text-align:center; font-size:0.7rem; color:var(--text3); padding-bottom:8px;">
+      Leyre App · Todo local · Sin servidores 🌸
+    </div>
+    <div class="spacer"></div>
+  </div>
+</div>
+
+<!-- BOTTOM BAR -->
+<div id="bottom-bar">
+  <div class="last-action">
+    <div class="last-action-label">Último registro</div>
+    <div class="last-action-text" id="last-action-text">–</div>
+  </div>
+  <button class="undo-btn" id="undo-btn" onclick="undoLast()">↩ Deshacer</button>
+  <button class="export-btn" onclick="exportData()" title="Exportar JSON">📤</button>
+</div>
+
+<!-- BIBE MODAL -->
+<div class="modal-overlay" id="bibe-modal">
+  <div class="modal-sheet">
+    <div class="modal-handle"></div>
+    <div class="modal-title">🍼 ¿Cuánto tomó?</div>
+    <input class="modal-input" id="bibe-input" type="number" placeholder="120" min="10" max="350" step="5">
+    <div class="modal-presets">
+      <button class="modal-preset" onclick="setBibePreset(60)">60ml</button>
+      <button class="modal-preset" onclick="setBibePreset(90)">90ml</button>
+      <button class="modal-preset selected" onclick="setBibePreset(120)">120ml</button>
+      <button class="modal-preset" onclick="setBibePreset(150)">150ml</button>
+      <button class="modal-preset" onclick="setBibePreset(180)">180ml</button>
+      <button class="modal-preset" onclick="setBibePreset(210)">210ml</button>
+    </div>
+    <button class="modal-confirm" onclick="confirmBibe()">✓ Guardar</button>
+  </div>
+</div>
+
+<!-- PESO MODAL -->
+<div class="modal-overlay" id="peso-modal">
+  <div class="modal-sheet">
+    <div class="modal-handle"></div>
+    <div class="modal-title">⚖️ Peso de Leyre</div>
+    <input class="modal-input" id="peso-input" type="number" placeholder="3.50" min="0.5" max="15" step="0.01">
+    <div class="modal-presets" id="peso-presets"></div>
+    <button class="modal-confirm" onclick="confirmPeso()">✓ Guardar</button>
+  </div>
+</div>
+
+<!-- TOAST CONTAINER -->
+<div id="toast-container"></div>
+
+<script>
+/* ============================================================
+   STATE & STORAGE
+============================================================ */
+const STORAGE_KEY = 'leyre_events_v2';
+const PROFILE_KEY = 'leyre_profile_v2';
+
+let events = [];
+let profile = null;
+let tetaSession = null; // { startTime, breast }
+let tetaTimer = null;
+let lastBibeMl = 120;
+let longPressTimer = null;
+
+// Load from storage
+function loadData() {
+  try {
+    events = JSON.parse(localStorage.getItem(STORAGE_KEY) || '[]');
+    profile = JSON.parse(localStorage.getItem(PROFILE_KEY) || 'null');
+    const saved = localStorage.getItem('leyre_bibe_ml');
+    if (saved) lastBibeMl = parseInt(saved);
+    const tetaSaved = localStorage.getItem('leyre_teta_session');
+    if (tetaSaved) tetaSession = JSON.parse(tetaSaved);
+  } catch(e) {
+    events = []; profile = null;
+  }
+}
+
+function saveEvents() {
+  localStorage.setItem(STORAGE_KEY, JSON.stringify(events));
+}
+
+function saveProfile() {
+  localStorage.setItem(PROFILE_KEY, JSON.stringify(profile));
+}
+
+/* ============================================================
+   ONBOARDING
+============================================================ */
+let obFeedType = 'mixed';
+let obPremature = false;
+let obSex = 'girl';
+
+function selectFeed(btn) {
+  document.querySelectorAll('[data-feed]').forEach(b => b.classList.remove('active'));
+  btn.classList.add('active');
+  obFeedType = btn.dataset.feed;
+}
+
+function selectPrem(btn) {
+  document.querySelectorAll('[data-prem]').forEach(b => b.classList.remove('active'));
+  btn.classList.add('active');
+  obPremature = btn.dataset.prem === 'yes';
+  document.getElementById('ob-weeks-section').classList.toggle('hidden', !obPremature);
+}
+
+function selectSex(btn) {
+  document.querySelectorAll('[data-sex]').forEach(b => b.classList.remove('active'));
+  btn.classList.add('active');
+  obSex = btn.dataset.sex;
+}
+
+function finishOnboarding() {
+  const name = document.getElementById('ob-name').value.trim() || 'Leyre';
+  const dob = document.getElementById('ob-dob').value;
+  const bw = parseFloat(document.getElementById('ob-bw').value) || null;
+  const bh = parseFloat(document.getElementById('ob-bh').value) || null;
+  const weeks = obPremature ? (parseInt(document.getElementById('ob-weeks').value) || 37) : 40;
+
+  if (!dob) {
+    showToast('⚠️', 'Pon la fecha de nacimiento');
+    return;
+  }
+
+  profile = {
+    name, dob, birthWeight: bw, birthHeight: bh,
+    feedType: obFeedType, premature: obPremature,
+    gestationalWeeks: weeks, sex: obSex,
+    createdAt: Date.now()
+  };
+  saveProfile();
+  document.getElementById('onboarding').style.display = 'none';
+  initApp();
+}
+
+/* ============================================================
+   AGE CALCULATION
+============================================================ */
+function getAgeInDays() {
+  if (!profile || !profile.dob) return 0;
+  const birth = new Date(profile.dob);
+  const now = new Date();
+  return Math.floor((now - birth) / 86400000);
+}
+
+function getCorrectedAgeInWeeks() {
+  // Corrected age for premature babies
+  const ageInWeeks = getAgeInDays() / 7;
+  if (!profile.premature) return ageInWeeks;
+  const correction = 40 - (profile.gestationalWeeks || 37);
+  return Math.max(0, ageInWeeks - correction);
+}
+
+function formatAge(days) {
+  if (days < 0) return 'Recién llegada 🌸';
+  if (days === 0) return '¡Bienvenida al mundo! 🌟';
+  if (days < 7) return `${days} día${days > 1 ? 's' : ''}`;
+  const weeks = Math.floor(days / 7);
+  const remDays = days % 7;
+  if (weeks < 4) return `${weeks} sem${weeks > 1 ? 'anas' : 'ana'}${remDays > 0 ? ` y ${remDays}d` : ''}`;
+  const months = Math.floor(days / 30.44);
+  const remWeeks = Math.floor((days - months * 30.44) / 7);
+  return `${months} mes${months > 1 ? 'es' : ''}${remWeeks > 0 ? ` y ${remWeeks} sem` : ''}`;
+}
+
+/* ============================================================
+   OMS WEIGHT PERCENTILES (Girls)
+   Source: WHO Child Growth Standards
+   LMS parameters for weight-for-age (girls), weeks 0-52 (by complete weeks)
+   Simplified median (M) and SD values
+============================================================ */
+// WHO weight-for-age girls: {week: {p3, p15, p50, p85, p97}} in kg
+// Weeks 0–52 (birth to 1 year), then monthly beyond
+const WHO_WEIGHT_GIRLS = {
+  // week: [P3, P15, P50, P85, P97]
+  0: [2.3, 2.7, 3.2, 3.7, 4.2],
+  1: [2.5, 2.9, 3.4, 3.9, 4.4],
+  2: [2.6, 3.0, 3.6, 4.2, 4.8],
+  3: [2.7, 3.1, 3.7, 4.4, 5.0],
+  4: [2.8, 3.3, 3.9, 4.6, 5.2],
+  6: [3.2, 3.8, 4.5, 5.3, 6.0],
+  8: [3.7, 4.3, 5.1, 6.0, 6.8],
+  10: [4.1, 4.8, 5.7, 6.7, 7.6],
+  12: [4.5, 5.2, 6.2, 7.3, 8.2],
+  16: [5.2, 6.0, 7.1, 8.4, 9.5],
+  20: [5.7, 6.6, 7.9, 9.3, 10.5],
+  24: [6.2, 7.2, 8.5, 10.1, 11.4],
+  28: [6.6, 7.7, 9.1, 10.8, 12.2],
+  32: [6.9, 8.1, 9.6, 11.4, 12.9],
+  36: [7.2, 8.4, 10.0, 11.9, 13.5],
+  40: [7.5, 8.7, 10.4, 12.4, 14.0],
+  44: [7.7, 9.0, 10.7, 12.8, 14.5],
+  48: [7.9, 9.2, 11.0, 13.2, 14.9],
+  52: [8.1, 9.5, 11.3, 13.5, 15.3],
+};
+
+const WHO_WEIGHT_BOYS = {
+  0: [2.5, 2.9, 3.3, 3.9, 4.4],
+  1: [2.7, 3.1, 3.6, 4.2, 4.7],
+  2: [2.9, 3.4, 4.0, 4.7, 5.3],
+  3: [3.0, 3.6, 4.3, 5.0, 5.7],
+  4: [3.1, 3.7, 4.5, 5.3, 6.0],
+  6: [3.7, 4.4, 5.3, 6.3, 7.2],
+  8: [4.3, 5.1, 6.1, 7.3, 8.3],
+  10: [4.8, 5.7, 6.9, 8.2, 9.3],
+  12: [5.3, 6.2, 7.5, 8.9, 10.1],
+  16: [6.2, 7.2, 8.7, 10.3, 11.6],
+  20: [6.9, 8.0, 9.7, 11.5, 13.0],
+  24: [7.5, 8.7, 10.5, 12.5, 14.1],
+  28: [7.9, 9.2, 11.1, 13.2, 14.9],
+  32: [8.3, 9.7, 11.7, 13.9, 15.7],
+  36: [8.6, 10.0, 12.2, 14.5, 16.4],
+  40: [8.9, 10.4, 12.6, 15.0, 17.0],
+  44: [9.2, 10.7, 13.0, 15.5, 17.5],
+  48: [9.4, 10.9, 13.3, 15.9, 18.0],
+  52: [9.6, 11.2, 13.6, 16.3, 18.5],
+};
+
+function interpolateWHO(ageWeeks, sex) {
+  const table = sex === 'girl' ? WHO_WEIGHT_GIRLS : WHO_WEIGHT_BOYS;
+  const keys = Object.keys(table).map(Number).sort((a,b) => a-b);
+
+  const w = Math.max(0, ageWeeks);
+  if (w >= keys[keys.length-1]) return table[keys[keys.length-1]];
+  if (w <= keys[0]) return table[keys[0]];
+
+  let lower = keys[0], upper = keys[1];
+  for (let i = 0; i < keys.length - 1; i++) {
+    if (keys[i] <= w && keys[i+1] >= w) { lower = keys[i]; upper = keys[i+1]; break; }
+  }
+
+  const t = (w - lower) / (upper - lower);
+  const lo = table[lower];
+  const hi = table[upper];
+  return lo.map((v, i) => v + t * (hi[i] - v));
+}
+
+function computePercentile(weightKg, ageWeeks, sex) {
+  const [p3, p15, p50, p85, p97] = interpolateWHO(ageWeeks, sex);
+  // Interpolate percentile from weight
+  const ranges = [[0, p3, 3], [p3, p15, 15], [p15, p50, 50], [p50, p85, 85], [p85, p97, 97], [p97, p97*1.3, 99]];
+  const pctBreaks = [0, 3, 15, 50, 85, 97, 99];
+
+  if (weightKg <= p3) return Math.round(Math.max(1, (weightKg/p3) * 3));
+  if (weightKg >= p97) return Math.round(Math.min(99, 97 + ((weightKg - p97) / (p97 * 0.2)) * 2));
+
+  for (let i = 0; i < ranges.length - 1; i++) {
+    const [lo, hi, pct] = ranges[i];
+    const [nlo, nhi, npct] = ranges[i+1];
+    if (weightKg >= lo && weightKg <= nlo) {
+      const t = (weightKg - lo) / (nlo - lo);
+      return Math.round(pct + t * (npct - pct));
+    }
+  }
+  return 50;
+}
+
+/* ============================================================
+   EVENTS API
+============================================================ */
+function addEvent(ev) {
+  ev.timestamp = ev.timestamp || Date.now();
+  ev.id = Date.now() + Math.random();
+  events.unshift(ev);
+  saveEvents();
+  updateStreak();
+  updateUI();
+  return ev;
+}
+
+function undoLast() {
+  if (events.length === 0) return;
+  const removed = events.shift();
+
+  // If undoing start of teta session
+  if (removed.type === 'lactancia' && removed.meta && removed.meta.active) {
+    tetaSession = null;
+    localStorage.removeItem('leyre_teta_session');
+  }
+
+  saveEvents();
+  updateUI();
+  showToast('↩', `Deshecho: ${typeLabel(removed.type)}`);
+}
+
+function typeLabel(type) {
+  const map = { biberon:'Biberón', lactancia:'Teta', pipi:'Pipí', caca:'Caca', peso:'Peso' };
+  return map[type] || type;
+}
+
+/* ============================================================
+   STREAK
+============================================================ */
+function updateStreak() {
+  const days = new Set(events.map(e => new Date(e.timestamp).toDateString()));
+  let streak = 0;
+  const today = new Date();
+  for (let i = 0; i < 365; i++) {
+    const d = new Date(today);
+    d.setDate(d.getDate() - i);
+    if (days.has(d.toDateString())) streak++;
+    else break;
+  }
+  document.getElementById('streak-num').textContent = streak;
+}
+
+/* ============================================================
+   BIBE HANDLER
+============================================================ */
+function handleBibe() {
+  // quick tap: save lastBibeMl
+  const ev = addEvent({ type: 'biberon', value: lastBibeMl, unit: 'ml' });
+  animateBtn('btn-bibe');
+  showToast('🍼', `Biberón: ${lastBibeMl} ml`);
+  confetti();
+}
+
+function openBibeModal() {
+  document.getElementById('bibe-input').value = lastBibeMl;
+  highlightPreset(lastBibeMl);
+  showModal('bibe-modal');
+}
+
+function setBibePreset(ml) {
+  document.getElementById('bibe-input').value = ml;
+  highlightPreset(ml);
+}
+
+function highlightPreset(ml) {
+  document.querySelectorAll('#bibe-modal .modal-preset').forEach(b => {
+    b.classList.toggle('selected', parseInt(b.textContent) === ml);
+  });
+}
+
+function confirmBibe() {
+  const ml = parseInt(document.getElementById('bibe-input').value) || lastBibeMl;
+  lastBibeMl = ml;
+  localStorage.setItem('leyre_bibe_ml', ml);
+  hideModal('bibe-modal');
+  addEvent({ type: 'biberon', value: ml, unit: 'ml' });
+  document.getElementById('bibe-sublabel').textContent = `${ml} ml · mantén para editar`;
+  showToast('🍼', `Biberón: ${ml} ml`);
+  confetti();
+}
+
+/* ============================================================
+   TETA HANDLER
+============================================================ */
+function handleTeta() {
+  if (tetaSession) {
+    stopTeta();
+  } else {
+    startTeta();
+  }
+}
+
+function getLastBreast() {
+  const prev = events.find(e => e.type === 'lactancia' && e.meta && e.meta.breast);
+  if (!prev) return 'left';
+  return prev.meta.breast === 'left' ? 'right' : 'left';
+}
+
+function startTeta() {
+  const breast = getLastBreast();
+  tetaSession = { startTime: Date.now(), breast };
+  localStorage.setItem('leyre_teta_session', JSON.stringify(tetaSession));
+
+  document.getElementById('btn-teta').classList.add('active-teta');
+  document.getElementById('teta-sublabel').textContent = 'Activa · toca para parar';
+  showTetaCard();
+  startTetaTimer();
+  showToast('🤱', `Teta iniciada · ${breast === 'left' ? 'pecho izquierdo' : 'pecho derecho'}`);
+  animateBtn('btn-teta');
+}
+
+function stopTeta() {
+  if (!tetaSession) return;
+  const duration = Math.round((Date.now() - tetaSession.startTime) / 60000);
+  const breast = tetaSession.breast;
+
+  tetaSession = null;
+  localStorage.removeItem('leyre_teta_session');
+
+  clearInterval(tetaTimer);
+  document.getElementById('btn-teta').classList.remove('active-teta');
+  document.getElementById('teta-sublabel').textContent = 'Pulsa para iniciar';
+  document.getElementById('teta-active-card').classList.remove('visible');
+
+  if (duration < 1) {
+    // Too short: save as single feed estimate (5 min minimum)
+    addEvent({ type: 'lactancia', value: 5, unit: 'min', meta: { breast, estimated: true } });
+    showToast('🤱', `Toma rápida registrada (~5min)`);
+  } else {
+    addEvent({ type: 'lactancia', value: duration, unit: 'min', meta: { breast } });
+    showToast('🤱', `Teta: ${duration} min · ${breast === 'left' ? 'izquierdo' : 'derecho'}`);
+    confetti();
+  }
+  animateBtn('btn-teta');
+}
+
+function showTetaCard() {
+  const card = document.getElementById('teta-active-card');
+  card.classList.add('visible');
+  const breast = tetaSession.breast;
+  document.getElementById('teta-breast-label').textContent =
+    `🤱 Pecho ${breast === 'left' ? 'Izquierdo' : 'Derecho'}`;
+}
+
+function startTetaTimer() {
+  clearInterval(tetaTimer);
+  tetaTimer = setInterval(() => {
+    if (!tetaSession) return;
+    const elapsed = Math.floor((Date.now() - tetaSession.startTime) / 1000);
+    const min = Math.floor(elapsed / 60);
+    const sec = elapsed % 60;
+    document.getElementById('teta-timer-display').textContent =
+      `${min}:${sec.toString().padStart(2,'0')}`;
+
+    // Ring: max visual at 20 min
+    const maxSec = 20 * 60;
+    const progress = Math.min(elapsed / maxSec, 1);
+    const circumference = 157;
+    const offset = circumference * (1 - progress);
+    document.getElementById('teta-ring-fill').style.strokeDashoffset = offset;
+    document.getElementById('teta-info-sub').textContent =
+      `${min} min${min !== 1 ? 's' : ''} activa`;
+  }, 1000);
+}
+
+/* ============================================================
+   PIPI / CACA
+============================================================ */
+function handlePipi() {
+  addEvent({ type: 'pipi' });
+  animateBtn('btn-pipi');
+  showToast('💧', 'Pipí registrado');
+  triggerHaptic();
+}
+
+function handleCaca() {
+  addEvent({ type: 'caca' });
+  animateBtn('btn-caca');
+  showToast('💩', '¡Caca registrada!');
+  confetti(['#ffb36e','#ff9944','#ffcc88']);
+  triggerHaptic();
+}
+
+/* ============================================================
+   PESO
+============================================================ */
+function openPesoModal() {
+  const lastPeso = events.find(e => e.type === 'peso');
+  const presets = document.getElementById('peso-presets');
+  presets.innerHTML = '';
+  if (lastPeso) {
+    [lastPeso.value - 0.1, lastPeso.value, lastPeso.value + 0.1].forEach(v => {
+      const btn = document.createElement('button');
+      btn.className = 'modal-preset';
+      btn.textContent = v.toFixed(2) + ' kg';
+      btn.onclick = () => {
+        document.getElementById('peso-input').value = v.toFixed(2);
+        document.querySelectorAll('#peso-presets .modal-preset').forEach(b => b.classList.remove('selected'));
+        btn.classList.add('selected');
+      };
+      presets.appendChild(btn);
+    });
+  }
+  if (lastPeso) document.getElementById('peso-input').value = lastPeso.value;
+  showModal('peso-modal');
+}
+
+function confirmPeso() {
+  const kg = parseFloat(document.getElementById('peso-input').value);
+  if (!kg || kg < 0.5 || kg > 30) {
+    showToast('⚠️', 'Peso no válido');
+    return;
+  }
+  hideModal('peso-modal');
+  addEvent({ type: 'peso', value: kg, unit: 'kg' });
+  showToast('⚖️', `Peso: ${kg.toFixed(2)} kg`);
+  confetti(['#5fffcc','#44ffbb','#00ddaa']);
+}
+
+/* ============================================================
+   TAMAGOTCHI STATE ENGINE
+============================================================ */
+function computeTamaState() {
+  const now = Date.now();
+  const ageInDays = getAgeInDays();
+
+  // Feed events last 24h
+  const last24h = now - 86400000;
+  const feedEvents = events.filter(e =>
+    (e.type === 'biberon' || e.type === 'lactancia') && e.timestamp > last24h
+  );
+  const pipiEvents = events.filter(e => e.type === 'pipi' && e.timestamp > last24h);
+  const cacaEvents = events.filter(e => e.type === 'caca' && e.timestamp > last24h);
+
+  // Last feed
+  const lastFeed = events.find(e => e.type === 'biberon' || e.type === 'lactancia');
+  const minutesSinceLastFeed = lastFeed ? (now - lastFeed.timestamp) / 60000 : 999;
+
+  // Expected feeding interval based on age
+  const expectedIntervalMin = ageInDays < 14 ? 120 :
+    ageInDays < 30 ? 150 :
+    ageInDays < 60 ? 180 :
+    ageInDays < 90 ? 210 : 240;
+
+  // Hunger score (0=full, 1=very hungry)
+  const hungerScore = Math.min(1, minutesSinceLastFeed / (expectedIntervalMin * 1.5));
+
+  // Hydration: pipis expected 6/day after day 5
+  const expectedPipis = ageInDays < 5 ? ageInDays + 1 : 6;
+  const hydrScore = Math.min(1, pipiEvents.length / expectedPipis);
+
+  // Poop: 0-1 cacas/day is normal after 1 month
+  const expectedCacas = ageInDays < 30 ? 3 : 1;
+  const comfortScore = cacaEvents.length >= (expectedCacas - 1) ? 1 : 0.3;
+
+  // State determination
+  if (events.length < 5) return {
+    emoji: '🤷', status: 'Registra más datos', sub: 'Para ver el estado de Leyre',
+    hunger: 0.5, hydration: 0.5, comfort: 0.5
+  };
+
+  if (hungerScore > 0.85) return {
+    emoji: '⚠️', status: '¡Leyre tiene hambre!',
+    sub: `Última toma hace ${Math.round(minutesSinceLastFeed)} min`,
+    hunger: hungerScore, hydration: hydrScore, comfort: comfortScore
+  };
+
+  if (hungerScore > 0.6) return {
+    emoji: '😣', status: 'Leyre empieza a tener hambre',
+    sub: `Prepara la toma pronto`,
+    hunger: hungerScore, hydration: hydrScore, comfort: comfortScore
+  };
+
+  if (hydrScore < 0.5 && ageInDays > 5) return {
+    emoji: '😐', status: 'Pocos pipís hoy',
+    sub: `${pipiEvents.length} vs ~${expectedPipis} esperados`,
+    hunger: hungerScore, hydration: hydrScore, comfort: comfortScore
+  };
+
+  if (hungerScore < 0.4 && hydrScore > 0.5) return {
+    emoji: '😊', status: `${profile?.name || 'Leyre'} está bien 🌸`,
+    sub: `Próxima toma en ~${Math.round(Math.max(0, expectedIntervalMin - minutesSinceLastFeed))} min`,
+    hunger: hungerScore, hydration: hydrScore, comfort: comfortScore
+  };
+
+  return {
+    emoji: '😐', status: 'Todo tranquilo',
+    sub: 'Sin alertas por ahora',
+    hunger: hungerScore, hydration: hydrScore, comfort: comfortScore
+  };
+}
+
+/* ============================================================
+   FEEDING INTELLIGENCE
+============================================================ */
+function computeFeedStats() {
+  const feedEvents = events
+    .filter(e => e.type === 'biberon' || e.type === 'lactancia')
+    .sort((a,b) => a.timestamp - b.timestamp);
+
+  if (feedEvents.length < 2) return { avgInterval: null, nextFeed: null };
+
+  const intervals = [];
+  for (let i = 1; i < feedEvents.length; i++) {
+    intervals.push(feedEvents[i].timestamp - feedEvents[i-1].timestamp);
+  }
+
+  // Use last 5 intervals for better accuracy
+  const recent = intervals.slice(-5);
+  const avgMs = recent.reduce((a,b) => a+b, 0) / recent.length;
+  const avgMin = Math.round(avgMs / 60000);
+
+  const lastFeed = feedEvents[feedEvents.length - 1];
+  const nextFeed = new Date(lastFeed.timestamp + avgMs);
+
+  return { avgInterval: avgMin, nextFeed };
+}
+
+function formatRelativeTime(ts) {
+  const diff = (Date.now() - ts) / 60000;
+  if (diff < 1) return 'Ahora mismo';
+  if (diff < 60) return `hace ${Math.round(diff)} min`;
+  const h = Math.floor(diff / 60);
+  const m = Math.round(diff % 60);
+  if (m === 0) return `hace ${h}h`;
+  return `hace ${h}h ${m}m`;
+}
+
+function formatTime(date) {
+  return date.toLocaleTimeString('es-ES', { hour:'2-digit', minute:'2-digit' });
+}
+
+/* ============================================================
+   UI UPDATE
+============================================================ */
+function updateUI() {
+  if (!profile) return;
+
+  const now = Date.now();
+  const today = new Date();
+  const startOfDay = new Date(today.getFullYear(), today.getMonth(), today.getDate()).getTime();
+
+  // Update name & age
+  document.getElementById('baby-name-display').textContent = profile.name || 'Leyre';
+  document.getElementById('baby-age-display').textContent = formatAge(getAgeInDays());
+
+  // Today's events
+  const todayEvents = events.filter(e => e.timestamp >= startOfDay);
+  const todayFeeds = todayEvents.filter(e => e.type === 'biberon' || e.type === 'lactancia');
+  const todayPipi = todayEvents.filter(e => e.type === 'pipi');
+  const todayCaca = todayEvents.filter(e => e.type === 'caca');
+  const todayMl = todayEvents.filter(e => e.type === 'biberon').reduce((s,e) => s + (e.value||0), 0);
+  const todayTetaMin = todayEvents.filter(e => e.type === 'lactancia').reduce((s,e) => s + (e.value||0), 0);
+
+  document.getElementById('cnt-feeds').textContent = todayFeeds.length;
+  document.getElementById('cnt-pipi').textContent = todayPipi.length;
+  document.getElementById('cnt-caca').textContent = todayCaca.length;
+  document.getElementById('cnt-ml').textContent = todayMl;
+  document.getElementById('stat-ml-today').textContent = todayMl;
+  document.getElementById('stat-teta-today').textContent = todayTetaMin;
+
+  // Tamagotchi
+  const tama = computeTamaState();
+  document.getElementById('tama-avatar').textContent = tama.emoji;
+  document.getElementById('tama-status').textContent = tama.status;
+  document.getElementById('tama-substatus').textContent = tama.sub;
+
+  // Vitals
+  const hungerPct = tama.hunger;
+  const hydraEl = document.getElementById('vital-hydration');
+  const hungerEl = document.getElementById('vital-hunger');
+  const comfortEl = document.getElementById('vital-comfort');
+
+  const ageInDays = getAgeInDays();
+  const expectedPipis = ageInDays < 5 ? ageInDays + 1 : 6;
+  const hydrFill = Math.min(1, todayPipi.length / expectedPipis);
+
+  hungerEl.style.setProperty('--fill', 1 - hungerPct);
+  hydraEl.style.setProperty('--fill', hydrFill);
+  comfortEl.style.setProperty('--fill', 0.5);
+
+  document.getElementById('vital-hunger-val').textContent =
+    hungerPct < 0.3 ? 'Llena' : hungerPct < 0.6 ? 'Pronto' : 'Hambre';
+  document.getElementById('vital-hydration-val').textContent = `${todayPipi.length}/${expectedPipis}`;
+  document.getElementById('vital-comfort-val').textContent = todayCaca.length;
+
+  // KPIs
+  const lastFeed = events.find(e => e.type === 'biberon' || e.type === 'lactancia');
+  document.getElementById('kpi-last-feed').textContent = lastFeed
+    ? formatRelativeTime(lastFeed.timestamp) : '–';
+
+  const stats = computeFeedStats();
+  document.getElementById('kpi-avg-interval').textContent = stats.avgInterval
+    ? `${stats.avgInterval} min` : '–';
+  document.getElementById('kpi-next-feed').textContent = stats.nextFeed
+    ? formatTime(stats.nextFeed) : '–';
+
+  // Last action
+  if (events.length > 0) {
+    const last = events[0];
+    const icon = { biberon:'🍼', lactancia:'🤱', pipi:'💧', caca:'💩', peso:'⚖️' }[last.type] || '•';
+    let detail = typeLabel(last.type);
+    if (last.value && last.unit === 'ml') detail += ` · ${last.value}ml`;
+    else if (last.value && last.unit === 'min') detail += ` · ${last.value}min`;
+    else if (last.value && last.unit === 'kg') detail += ` · ${last.value}kg`;
+    document.getElementById('last-action-text').textContent =
+      `${icon} ${detail} · ${formatRelativeTime(last.timestamp)}`;
+    document.getElementById('undo-btn').classList.add('active');
+  } else {
+    document.getElementById('last-action-text').textContent = '–';
+    document.getElementById('undo-btn').classList.remove('active');
+  }
+
+  // Peso sublabel
+  const lastPeso = events.find(e => e.type === 'peso');
+  document.getElementById('peso-sublabel').textContent = lastPeso
+    ? `Último: ${lastPeso.value.toFixed(2)} kg` : 'Sin datos aún';
+
+  // Bibe sublabel
+  document.getElementById('bibe-sublabel').textContent = `${lastBibeMl} ml · mantén para editar`;
+  document.getElementById('bibe-badge').textContent = todayFeeds.filter(e=>e.type==='biberon').length || '';
+
+  // Percentile
+  updatePercentile();
+
+  // Timeline
+  updateTimeline();
+
+  // Mini bar charts (last 7 days)
+  updateBarCharts();
+
+  // Teta session resume
+  if (tetaSession) {
+    document.getElementById('btn-teta').classList.add('active-teta');
+    document.getElementById('teta-sublabel').textContent = 'Activa · toca para parar';
+    showTetaCard();
+    if (!tetaTimer) startTetaTimer();
+  }
+}
+
+function updatePercentile() {
+  const lastPeso = events.find(e => e.type === 'peso');
+  if (!lastPeso || !profile) return;
+
+  const correctedWeeks = getCorrectedAgeInWeeks();
+  const pct = computePercentile(lastPeso.value, correctedWeeks, profile.sex || 'girl');
+
+  document.getElementById('pc-last-weight').textContent = lastPeso.value.toFixed(2);
+  document.getElementById('pg-percentile').textContent = `P${pct}`;
+
+  let label = '';
+  let color = 'var(--teal)';
+  if (pct < 3) { label = '⚠️ Bajo el P3 · Consulta al pediatra'; color = 'var(--red)'; }
+  else if (pct < 15) { label = 'Peso bajo-normal · Vigilar'; color = 'var(--orange)'; }
+  else if (pct <= 85) { label = '✓ Peso en rango normal OMS'; color = 'var(--teal)'; }
+  else if (pct <= 97) { label = 'Peso alto-normal · Normal'; color = 'var(--yellow)'; }
+  else { label = '⚠️ Sobre P97 · Consulta al pediatra'; color = 'var(--orange)'; }
+
+  document.getElementById('pg-label').textContent = label;
+  document.getElementById('pg-percentile').style.color = color;
+
+  // Position marker (0-100% of bar)
+  const markerLeft = Math.max(2, Math.min(97, pct)) + '%';
+  document.getElementById('pg-marker').style.left = markerLeft;
+
+  if (profile.premature) {
+    document.getElementById('pc-corrected-age').textContent =
+      `(edad corregida: ${Math.round(correctedWeeks)} sem)`;
+  }
+}
+
+function updateTimeline() {
+  const last24h = Date.now() - 86400000;
+  const recent = events.filter(e => e.timestamp > last24h).slice(0, 20);
+
+  const container = document.getElementById('timeline');
+  container.innerHTML = '';
+
+  if (recent.length === 0) {
+    container.innerHTML = '<div style="text-align:center; color:var(--text3); font-size:0.82rem; padding:20px;">Sin eventos en las últimas 24h</div>';
+    return;
+  }
+
+  const colors = { biberon:'var(--blue)', lactancia:'var(--pink)', pipi:'var(--yellow)', caca:'var(--orange)', peso:'var(--teal)' };
+  const icons = { biberon:'🍼', lactancia:'🤱', pipi:'💧', caca:'💩', peso:'⚖️' };
+
+  recent.forEach(ev => {
+    const div = document.createElement('div');
+    div.className = 'timeline-item';
+    div.style.setProperty('--item-color', colors[ev.type] || 'var(--pink)');
+
+    let detail = '';
+    if (ev.type === 'biberon') detail = `${ev.value} ml`;
+    else if (ev.type === 'lactancia') {
+      detail = `${ev.value} min`;
+      if (ev.meta?.breast) detail += ` · ${ev.meta.breast === 'left' ? 'pecho izq.' : 'pecho der.'}`;
+      if (ev.meta?.estimated) detail += ' (estimado)';
+    }
+    else if (ev.type === 'peso') detail = `${ev.value} kg`;
+
+    const time = new Date(ev.timestamp);
+    div.innerHTML = `
+      <div class="tl-icon">${icons[ev.type] || '•'}</div>
+      <div class="tl-content">
+        <div class="tl-type">${typeLabel(ev.type)}</div>
+        ${detail ? `<div class="tl-detail">${detail}</div>` : ''}
+      </div>
+      <div class="tl-time">${formatTime(time)}</div>
+    `;
+    container.appendChild(div);
+  });
+}
+
+function updateBarCharts() {
+  const now = new Date();
+  // 7 day bars for ml
+  const mlBars = document.getElementById('ml-bars');
+  const tetaBars = document.getElementById('teta-bars');
+
+  const days = 7;
+  let mlData = [], tetaData = [];
+
+  for (let i = days - 1; i >= 0; i--) {
+    const d = new Date(now);
+    d.setDate(d.getDate() - i);
+    const start = new Date(d.getFullYear(), d.getMonth(), d.getDate()).getTime();
+    const end = start + 86400000;
+    const dayEvents = events.filter(e => e.timestamp >= start && e.timestamp < end);
+    const ml = dayEvents.filter(e => e.type === 'biberon').reduce((s,e) => s + (e.value||0), 0);
+    const teta = dayEvents.filter(e => e.type === 'lactancia').reduce((s,e) => s + (e.value||0), 0);
+    mlData.push({ ml, isToday: i === 0 });
+    tetaData.push({ teta, isToday: i === 0 });
+  }
+
+  const maxMl = Math.max(...mlData.map(d => d.ml), 1);
+  const maxTeta = Math.max(...tetaData.map(d => d.teta), 1);
+
+  mlBars.innerHTML = mlData.map(d => `
+    <div class="mini-bar ${d.isToday ? 'today' : ''}"
+      style="height:${Math.max(3, (d.ml/maxMl)*100)}%; --bar-color:var(--blue);"
+      title="${d.ml}ml"></div>
+  `).join('');
+
+  tetaBars.innerHTML = tetaData.map(d => `
+    <div class="mini-bar ${d.isToday ? 'today' : ''}"
+      style="height:${Math.max(3, (d.teta/maxTeta)*100)}%; --bar-color:var(--pink);"
+      title="${d.teta}min"></div>
+  `).join('');
+}
+
+/* ============================================================
+   MODAL SYSTEM
+============================================================ */
+function showModal(id) {
+  const overlay = document.getElementById(id);
+  overlay.classList.add('visible');
+  // Close on overlay tap
+  overlay.onclick = (e) => { if (e.target === overlay) hideModal(id); };
+}
+
+function hideModal(id) {
+  document.getElementById(id).classList.remove('visible');
+}
+
+/* ============================================================
+   ANIMATIONS & FEEDBACK
+============================================================ */
+function animateBtn(id) {
+  const btn = document.getElementById(id) || document.querySelector('.' + id);
+  if (!btn) return;
+  btn.classList.add('pressed');
+  setTimeout(() => btn.classList.remove('pressed'), 400);
+  const icon = btn.querySelector('.btn-icon');
+  if (icon) {
+    icon.style.transform = 'scale(1.3) rotate(-5deg)';
+    setTimeout(() => icon.style.transform = '', 300);
+  }
+}
+
+function bounceTama() {
+  const el = document.getElementById('tama-avatar');
+  el.classList.remove('bounce');
+  void el.offsetWidth;
+  el.classList.add('bounce');
+  setTimeout(() => el.classList.remove('bounce'), 600);
+}
+
+function triggerHaptic() {
+  if (navigator.vibrate) navigator.vibrate(30);
+}
+
+function confetti(colors = ['#ff6eb4','#b47eff','#6eb5ff','#5fffcc','#ffe96e']) {
+  const container = document.body;
+  for (let i = 0; i < 12; i++) {
+    const particle = document.createElement('div');
+    particle.className = 'confetti-particle';
+    const x = Math.random() * window.innerWidth;
+    const y = Math.random() * (window.innerHeight * 0.3) + 50;
+    particle.style.cssText = `
+      left: ${x}px; top: ${y}px;
+      background: ${colors[Math.floor(Math.random() * colors.length)]};
+      --dur: ${0.8 + Math.random() * 0.6}s;
+      --dy: ${100 + Math.random() * 200}px;
+      --dx: ${-60 + Math.random() * 120}px;
+      --rot: ${Math.random() > 0.5 ? '' : '-'}${180 + Math.random() * 180}deg;
+      width: ${6 + Math.random() * 6}px;
+      height: ${6 + Math.random() * 6}px;
+      border-radius: ${Math.random() > 0.5 ? '50%' : '2px'};
+    `;
+    container.appendChild(particle);
+    setTimeout(() => particle.remove(), 1500);
+  }
+}
+
+/* ============================================================
+   TOAST
+============================================================ */
+function showToast(icon, text) {
+  const container = document.getElementById('toast-container');
+  const toast = document.createElement('div');
+  toast.className = 'toast';
+  toast.innerHTML = `<span class="toast-icon">${icon}</span> ${text}`;
+  container.appendChild(toast);
+  setTimeout(() => {
+    toast.classList.add('out');
+    setTimeout(() => toast.remove(), 250);
+  }, 2200);
+}
+
+/* ============================================================
+   EXPORT
+============================================================ */
+function exportData() {
+  const data = {
+    profile,
+    events,
+    exportDate: new Date().toISOString(),
+    app: 'Leyre Baby Tracker'
+  };
+  const blob = new Blob([JSON.stringify(data, null, 2)], { type: 'application/json' });
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement('a');
+  a.href = url;
+  a.download = `leyre-datos-${new Date().toISOString().split('T')[0]}.json`;
+  a.click();
+  URL.revokeObjectURL(url);
+  showToast('📤', 'Datos exportados');
+}
+
+/* ============================================================
+   LONG PRESS (BIBE)
+============================================================ */
+(function setupLongPress() {
+  const btn = document.getElementById('btn-bibe');
+  let timer;
+
+  const start = () => {
+    timer = setTimeout(() => { openBibeModal(); }, 600);
+  };
+  const cancel = () => clearTimeout(timer);
+
+  btn.addEventListener('touchstart', start, { passive: true });
+  btn.addEventListener('touchend', cancel);
+  btn.addEventListener('touchmove', cancel);
+  btn.addEventListener('mousedown', start);
+  btn.addEventListener('mouseup', cancel);
+  btn.addEventListener('mouseleave', cancel);
+})();
+
+/* ============================================================
+   PWA SERVICE WORKER
+============================================================ */
+const SW_CODE = `
+const CACHE = 'leyre-v2';
+const ASSETS = ['/'];
+self.addEventListener('install', e => {
+  e.waitUntil(caches.open(CACHE).then(c => c.addAll(ASSETS)));
+  self.skipWaiting();
+});
+self.addEventListener('activate', e => {
+  e.waitUntil(caches.keys().then(keys =>
+    Promise.all(keys.filter(k => k !== CACHE).map(k => caches.delete(k)))
+  ));
+  self.clients.claim();
+});
+self.addEventListener('fetch', e => {
+  e.respondWith(
+    caches.match(e.request).then(cached => cached || fetch(e.request).catch(() => cached))
+  );
+});
+`;
+
+function registerSW() {
+  if ('serviceWorker' in navigator) {
+    const blob = new Blob([SW_CODE], { type: 'text/javascript' });
+    const swUrl = URL.createObjectURL(blob);
+    navigator.serviceWorker.register(swUrl).catch(() => {});
+  }
+}
+
+/* ============================================================
+   PWA MANIFEST
+============================================================ */
+function injectManifest() {
+  const manifest = {
+    name: 'Leyre Baby Tracker',
+    short_name: 'Leyre 🌸',
+    description: 'Seguimiento de bebé para Leyre',
+    start_url: '.',
+    display: 'standalone',
+    background_color: '#0d0d1a',
+    theme_color: '#ff6eb4',
+    icons: [{
+      src: "data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🌸</text></svg>",
+      sizes: '512x512',
+      type: 'image/svg+xml'
+    }]
+  };
+  const blob = new Blob([JSON.stringify(manifest)], { type: 'application/json' });
+  const url = URL.createObjectURL(blob);
+  const link = document.createElement('link');
+  link.rel = 'manifest';
+  link.href = url;
+  document.head.appendChild(link);
+}
+
+/* ============================================================
+   INIT
+============================================================ */
+function initApp() {
+  // Update display loop
+  updateUI();
+  setInterval(updateUI, 60000); // refresh KPIs every minute
+
+  // Update streak
+  updateStreak();
+}
+
+// BOOT
+loadData();
+injectManifest();
+registerSW();
+
+if (profile) {
+  document.getElementById('onboarding').style.display = 'none';
+  initApp();
+} else {
+  // Pre-fill today's date as default
+  const today = new Date();
+  // Default to 30 days ago as example (can be changed)
+  document.getElementById('ob-dob').max = today.toISOString().split('T')[0];
+}
+</script>
+</body>
+</html>
