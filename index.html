@@ -1013,13 +1013,13 @@ body {
      ONBOARDING
 ============================================================ -->
 <div id="onboarding">
-  <div class="ob-emoji">🌸</div>
-  <div class="ob-title">¡Hola, mamá!</div>
-  <div class="ob-sub">Cuéntame un poco sobre Leyre para empezar</div>
+  <div class="ob-emoji">🍼</div>
+  <div class="ob-title">¡Hola!</div>
+  <div class="ob-sub">Cuéntame un poco sobre tu bebé para empezar</div>
 
   <div class="ob-section">
     <label class="ob-label">Nombre del bebé</label>
-    <input class="ob-input" id="ob-name" type="text" value="Leyre" placeholder="Nombre">
+    <input class="ob-input" id="ob-name" type="text" placeholder="Nombre del bebé">
   </div>
 
   <div class="ob-section">
@@ -1068,7 +1068,7 @@ body {
     </div>
   </div>
 
-  <button class="ob-btn" onclick="finishOnboarding()">¡Empezar a cuidar a Leyre! 🌸</button>
+  <button class="ob-btn" onclick="finishOnboarding()">¡Empezar! 🍼</button>
 </div>
 
 <!-- ============================================================
@@ -1082,7 +1082,7 @@ body {
       <div class="baby-card">
         <div class="tama-avatar" id="tama-avatar" onclick="bounceTama()">😊</div>
         <div class="baby-info">
-          <div class="baby-name" id="baby-name-display">Leyre</div>
+          <div class="baby-name" id="baby-name-display">Bebé</div>
           <div class="baby-age" id="baby-age-display"></div>
           <div class="tama-status" id="tama-status">Cargando...</div>
           <div class="tama-substatus" id="tama-substatus"></div>
@@ -1263,7 +1263,7 @@ body {
 
     <div class="dot-separator"><span></span><span></span><span></span></div>
     <div style="text-align:center; font-size:0.7rem; color:var(--text3); padding-bottom:8px;">
-      Leyre App · Todo local · Sin servidores 🌸
+      BabyTracker · Todo local · Sin servidores 🍼
     </div>
     <div class="spacer"></div>
   </div>
@@ -1301,7 +1301,7 @@ body {
 <div class="modal-overlay" id="peso-modal">
   <div class="modal-sheet">
     <div class="modal-handle"></div>
-    <div class="modal-title">⚖️ Peso de Leyre</div>
+    <div class="modal-title">⚖️ Peso del bebé</div>
     <input class="modal-input" id="peso-input" type="number" placeholder="3.50" min="0.5" max="15" step="0.01">
     <div class="modal-presets" id="peso-presets"></div>
     <button class="modal-confirm" onclick="confirmPeso()">✓ Guardar</button>
@@ -1315,8 +1315,8 @@ body {
 /* ============================================================
    STATE & STORAGE
 ============================================================ */
-const STORAGE_KEY = 'leyre_events_v2';
-const PROFILE_KEY = 'leyre_profile_v2';
+const STORAGE_KEY = 'babytracker_events_v1';
+const PROFILE_KEY = 'babytracker_profile_v1';
 
 let events = [];
 let profile = null;
@@ -1330,9 +1330,9 @@ function loadData() {
   try {
     events = JSON.parse(localStorage.getItem(STORAGE_KEY) || '[]');
     profile = JSON.parse(localStorage.getItem(PROFILE_KEY) || 'null');
-    const saved = localStorage.getItem('leyre_bibe_ml');
+    const saved = localStorage.getItem('babytracker_bibe_ml');
     if (saved) lastBibeMl = parseInt(saved);
-    const tetaSaved = localStorage.getItem('leyre_teta_session');
+    const tetaSaved = localStorage.getItem('babytracker_teta_session');
     if (tetaSaved) tetaSession = JSON.parse(tetaSaved);
   } catch(e) {
     events = []; profile = null;
@@ -1374,7 +1374,7 @@ function selectSex(btn) {
 }
 
 function finishOnboarding() {
-  const name = document.getElementById('ob-name').value.trim() || 'Leyre';
+  const name = document.getElementById('ob-name').value.trim() || 'Bebé';
   const dob = document.getElementById('ob-dob').value;
   const bw = parseFloat(document.getElementById('ob-bw').value) || null;
   const bh = parseFloat(document.getElementById('ob-bh').value) || null;
@@ -1538,7 +1538,7 @@ function undoLast() {
   // If undoing start of teta session
   if (removed.type === 'lactancia' && removed.meta && removed.meta.active) {
     tetaSession = null;
-    localStorage.removeItem('baby_teta_session');
+    localStorage.removeItem('babytracker_teta_session');
   }
 
   saveEvents();
@@ -1598,7 +1598,7 @@ function highlightPreset(ml) {
 function confirmBibe() {
   const ml = parseInt(document.getElementById('bibe-input').value) || lastBibeMl;
   lastBibeMl = ml;
-  localStorage.setItem('baby_bibe_ml', ml);
+  localStorage.setItem('babytracker_bibe_ml', ml);
   hideModal('bibe-modal');
   addEvent({ type: 'biberon', value: ml, unit: 'ml' });
   document.getElementById('bibe-sublabel').textContent = `${ml} ml · mantén para editar`;
@@ -1626,7 +1626,7 @@ function getLastBreast() {
 function startTeta() {
   const breast = getLastBreast();
   tetaSession = { startTime: Date.now(), breast };
-  localStorage.setItem('baby_teta_session', JSON.stringify(tetaSession));
+  localStorage.setItem('babytracker_teta_session', JSON.stringify(tetaSession));
 
   document.getElementById('btn-teta').classList.add('active-teta');
   document.getElementById('teta-sublabel').textContent = 'Activa · toca para parar';
@@ -1642,7 +1642,7 @@ function stopTeta() {
   const breast = tetaSession.breast;
 
   tetaSession = null;
-  localStorage.removeItem('baby_teta_session');
+  localStorage.removeItem('babytracker_teta_session');
 
   clearInterval(tetaTimer);
   document.getElementById('btn-teta').classList.remove('active-teta');
@@ -1782,18 +1782,18 @@ function computeTamaState() {
 
   // State determination
   if (events.length < 5) return {
-    emoji: '🤷', status: 'Registra más datos', sub: 'Para ver el estado de Leyre',
+    emoji: '🤷', status: 'Registra más datos', sub: `Para ver el estado de ${profile?.name || 'tu bebé'}`,
     hunger: 0.5, hydration: 0.5, comfort: 0.5
   };
 
   if (hungerScore > 0.85) return {
-    emoji: '⚠️', status: '¡Leyre tiene hambre!',
+    emoji: '⚠️', status: `¡${profile?.name || 'Tu bebé'} tiene hambre!`,
     sub: `Última toma hace ${Math.round(minutesSinceLastFeed)} min`,
     hunger: hungerScore, hydration: hydrScore, comfort: comfortScore
   };
 
   if (hungerScore > 0.6) return {
-    emoji: '😣', status: 'Leyre empieza a tener hambre',
+    emoji: '😣', status: `${profile?.name || 'Tu bebé'} empieza a tener hambre`,
     sub: `Prepara la toma pronto`,
     hunger: hungerScore, hydration: hydrScore, comfort: comfortScore
   };
@@ -2197,60 +2197,6 @@ function exportData() {
 /* ============================================================
    PWA SERVICE WORKER
 ============================================================ */
-const SW_CODE = `
-const CACHE = 'leyre-v2';
-const ASSETS = ['/'];
-self.addEventListener('install', e => {
-  e.waitUntil(caches.open(CACHE).then(c => c.addAll(ASSETS)));
-  self.skipWaiting();
-});
-self.addEventListener('activate', e => {
-  e.waitUntil(caches.keys().then(keys =>
-    Promise.all(keys.filter(k => k !== CACHE).map(k => caches.delete(k)))
-  ));
-  self.clients.claim();
-});
-self.addEventListener('fetch', e => {
-  e.respondWith(
-    caches.match(e.request).then(cached => cached || fetch(e.request).catch(() => cached))
-  );
-});
-`;
-
-function registerSW() {
-  if ('serviceWorker' in navigator) {
-    const blob = new Blob([SW_CODE], { type: 'text/javascript' });
-    const swUrl = URL.createObjectURL(blob);
-    navigator.serviceWorker.register(swUrl).catch(() => {});
-  }
-}
-
-/* ============================================================
-   PWA MANIFEST
-============================================================ */
-function injectManifest() {
-  const manifest = {
-    name: 'Leyre Baby Tracker',
-    short_name: 'Leyre 🌸',
-    description: 'Seguimiento de bebé para Leyre',
-    start_url: '.',
-    display: 'standalone',
-    background_color: '#0d0d1a',
-    theme_color: '#ff6eb4',
-    icons: [{
-      src: "data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🌸</text></svg>",
-      sizes: '512x512',
-      type: 'image/svg+xml'
-    }]
-  };
-  const blob = new Blob([JSON.stringify(manifest)], { type: 'application/json' });
-  const url = URL.createObjectURL(blob);
-  const link = document.createElement('link');
-  link.rel = 'manifest';
-  link.href = url;
-  document.head.appendChild(link);
-}
-
 /* ============================================================
    INIT
 ============================================================ */
@@ -2265,8 +2211,6 @@ function initApp() {
 
 // BOOT
 loadData();
-injectManifest();
-registerSW();
 
 if (profile) {
   document.getElementById('onboarding').style.display = 'none';
