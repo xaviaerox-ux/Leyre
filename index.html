@@ -6,8 +6,16 @@
 <meta name="theme-color" content="#0d0d1a">
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-<meta name="apple-mobile-web-app-title" content="Leyre 🌸">
-<title>Leyre 🌸</title>
+<meta name="apple-mobile-web-app-title" content="BabyTracker 🍼">
+<title>BabyTracker 🍼</title>
+<link rel="manifest" href="manifest.json">
+<script>
+  if ('serviceWorker' in navigator) {
+    window.addEventListener('load', () => {
+      navigator.serviceWorker.register('./sw.js');
+    });
+  }
+</script>
 
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800;900&family=Pacifico&display=swap" rel="stylesheet">
@@ -1407,8 +1415,8 @@ function getCorrectedAgeInWeeks() {
 }
 
 function formatAge(days) {
-  if (days < 0) return 'Recién llegada 🌸';
-  if (days === 0) return '¡Bienvenida al mundo! 🌟';
+  if (days < 0) return 'Recién llegado/a 🍼';
+  if (days === 0) return '¡Bienvenido/a al mundo! 🌟';
   if (days < 7) return `${days} día${days > 1 ? 's' : ''}`;
   const weeks = Math.floor(days / 7);
   const remDays = days % 7;
@@ -1530,7 +1538,7 @@ function undoLast() {
   // If undoing start of teta session
   if (removed.type === 'lactancia' && removed.meta && removed.meta.active) {
     tetaSession = null;
-    localStorage.removeItem('leyre_teta_session');
+    localStorage.removeItem('baby_teta_session');
   }
 
   saveEvents();
@@ -1590,7 +1598,7 @@ function highlightPreset(ml) {
 function confirmBibe() {
   const ml = parseInt(document.getElementById('bibe-input').value) || lastBibeMl;
   lastBibeMl = ml;
-  localStorage.setItem('leyre_bibe_ml', ml);
+  localStorage.setItem('baby_bibe_ml', ml);
   hideModal('bibe-modal');
   addEvent({ type: 'biberon', value: ml, unit: 'ml' });
   document.getElementById('bibe-sublabel').textContent = `${ml} ml · mantén para editar`;
@@ -1618,7 +1626,7 @@ function getLastBreast() {
 function startTeta() {
   const breast = getLastBreast();
   tetaSession = { startTime: Date.now(), breast };
-  localStorage.setItem('leyre_teta_session', JSON.stringify(tetaSession));
+  localStorage.setItem('baby_teta_session', JSON.stringify(tetaSession));
 
   document.getElementById('btn-teta').classList.add('active-teta');
   document.getElementById('teta-sublabel').textContent = 'Activa · toca para parar';
@@ -1634,7 +1642,7 @@ function stopTeta() {
   const breast = tetaSession.breast;
 
   tetaSession = null;
-  localStorage.removeItem('leyre_teta_session');
+  localStorage.removeItem('baby_teta_session');
 
   clearInterval(tetaTimer);
   document.getElementById('btn-teta').classList.remove('active-teta');
@@ -1797,7 +1805,7 @@ function computeTamaState() {
   };
 
   if (hungerScore < 0.4 && hydrScore > 0.5) return {
-    emoji: '😊', status: `${profile?.name || 'Leyre'} está bien 🌸`,
+    emoji: '😊', status: `${profile?.name || 'Bebé'} está bien 🌸`,
     sub: `Próxima toma en ~${Math.round(Math.max(0, expectedIntervalMin - minutesSinceLastFeed))} min`,
     hunger: hungerScore, hydration: hydrScore, comfort: comfortScore
   };
@@ -1860,7 +1868,7 @@ function updateUI() {
   const startOfDay = new Date(today.getFullYear(), today.getMonth(), today.getDate()).getTime();
 
   // Update name & age
-  document.getElementById('baby-name-display').textContent = profile.name || 'Leyre';
+  document.getElementById('baby-name-display').textContent = profile.name || 'Bebé';
   document.getElementById('baby-age-display').textContent = formatAge(getAgeInDays());
 
   // Today's events
@@ -2154,13 +2162,13 @@ function exportData() {
     profile,
     events,
     exportDate: new Date().toISOString(),
-    app: 'Leyre Baby Tracker'
+    app: 'BabyTracker'
   };
   const blob = new Blob([JSON.stringify(data, null, 2)], { type: 'application/json' });
   const url = URL.createObjectURL(blob);
   const a = document.createElement('a');
   a.href = url;
-  a.download = `leyre-datos-${new Date().toISOString().split('T')[0]}.json`;
+  a.download = `baby-datos-${new Date().toISOString().split('T')[0]}.json`;
   a.click();
   URL.revokeObjectURL(url);
   showToast('📤', 'Datos exportados');

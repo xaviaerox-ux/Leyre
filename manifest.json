@@ -1,0 +1,17 @@
+{
+  "name": "BabyTracker",
+  "short_name": "BabyTracker",
+  "description": "Seguimiento diario de cuidados para tu bebé",
+  "start_url": "./index.html",
+  "display": "standalone",
+  "background_color": "#0d0d1a",
+  "theme_color": "#0d0d1a",
+  "icons": [
+    {
+      "src": "https://cdn-icons-png.flaticon.com/512/3590/3590050.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any maskable"
+    }
+  ]
+}
